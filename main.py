@@ -34,7 +34,7 @@ class User(BaseModel):
 # Selenium functions
 def login(username, password):
     if username == '' or password == '':
-        return 'username dan password tidak boleh kosong'
+        return 'Username dan password tidak boleh kosong'
     driver.get(url_login)
     driver.find_element(By.ID, 'username').send_keys(username)
     driver.find_element(By.ID, 'password').send_keys(password)
@@ -67,7 +67,7 @@ async def root():
 
 @app.get("/cek-ipk")
 async def ipk_gui(request: Request):
-    return templates.TemplateResponse("blablabla.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/cek-ipk")
 async def ipk_api(user: User):

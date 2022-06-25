@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<head>
+    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="card">
+            <h1>📈 Cek IPK</h1>
+            <h2>
+                Sebuah program untuk melihat IPK kamu berdasarkan <span class="link">beasiswa.ui.ac.id</span>
+            </h2>
+        </div>
+        <div class="card">
+            <h3>Kredensial SSO-UI</h3>
+            <form>
+                <label>Username SSO-UI</label>
+                <input id="data-username" name="username">
+                <label>Password SSO-UI</label>
+                <input id="data-password" name="password" type="password">
+            </form>
+            <button onclick="cekIpk()">Cek IPK Kamu!</button>
+        </div>
+        <div class="card">
+            <h3>Hasil Fetch API</h3>
+            <div id="res" class="gray">
+                Belum ada panggilan ke API
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    const URL_BE = "/cek-ipk"
+
+    function cekIpk() {
+        let username = $("#data-username").val()
+        let password = $("#data-password").val()
+        let data = {
+            "username": username,
+            "password": password
+        }
+        $.ajax({
+            type: "POST",
+            url: URL_BE,
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json",
+            success: function(data) {
+                console.log(data)
+                let flag = data.message.name
+                if (flag) {
+                    $('#res').html(`
+                        <label>Nama</label>
+                        <span>${data.message.name}</span>
+                        <label>NPM</label>
+                        <span>${data.message.npm}</span>
+                        <label>IPK</label>
+                        <span>${data.message.ipk}</span>
+                    `)
+                        .removeClass('gray')
+                        .addClass('success')
+                } else {
+                    $('#res').html(`${data.message}`)
+                        .removeClass('gray')
+                        .addClass('red')
+                }
+            }
+        });
+
+    }
+</script>
