@@ -80,6 +80,11 @@ button {
     border: none;
     background-color: #f6dB00;
     transition: 0.2s;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
 
 button:hover {
@@ -110,4 +115,47 @@ button:active {
     background-color: #ffb5b5;
     color: #c74a4a;
     border: solid 1px #c74a4a;
+}
+
+/* Loading Spinner */
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 22px;
+    height: 22px;
+    padding: 0 0 3px 4px;
+}
+
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    margin: 4px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

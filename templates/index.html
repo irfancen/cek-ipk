@@ -15,13 +15,13 @@
         </div>
         <div class="card">
             <h3>Kredensial SSO-UI</h3>
-            <form>
+            <form id="sso-form">
                 <label>Username SSO-UI</label>
                 <input id="data-username" name="username">
                 <label>Password SSO-UI</label>
                 <input id="data-password" name="password" type="password">
             </form>
-            <button onclick="cekIpk()">Cek IPK Kamu!</button>
+            <button id="login-btn" type="submit" onclick="cekIpk()"><span>Cek IPK Kamu!</span><div class="lds-ring"><div></div><div></div><div></div><div></div></div></button>
         </div>
         <div class="card">
             <h3>Hasil Fetch API</h3>
@@ -34,6 +34,7 @@
 </body>
 <script>
     const URL_BE = "/cek-ipk"
+    $(".lds-ring").hide();
 
     function cekIpk() {
         let username = $("#data-username").val()
@@ -48,13 +49,21 @@
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "json",
+            beforeSend: function() {
+                $(".lds-ring").show();
+                $('#res').html(`Belum ada panggilan ke API`)
+                $('#res').removeClass('success')
+                $('#res').removeClass('red')
+                $('#res').addClass('gray')
+            },
             success: function(data) {
+                $(".lds-ring").hide();
                 console.log(data)
-                let flag = data.message.name
+                let flag = data.message.nama
                 if (flag) {
                     $('#res').html(`
                         <label>Nama</label>
-                        <span>${data.message.name}</span>
+                        <span>${data.message.nama}</span>
                         <label>NPM</label>
                         <span>${data.message.npm}</span>
                         <label>IPK</label>
@@ -69,6 +78,12 @@
                 }
             }
         });
-
     }
+
+    var input = $("#login-btn");
+    $("#sso-form").keypress("keyup", function(e) {
+        if (e.keyCode === 13) {
+            $("#login-btn").click();
+        }
+    });
 </script>
