@@ -24,7 +24,7 @@ headers = {
 options = Options()
 options.headless = True
 driver = webdriver.Chrome(options=options)
-wait = WebDriverWait(driver, 2)
+wait = WebDriverWait(driver, 3)
 
 # User Model
 class User(BaseModel):
